@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SurakshaAI</title>
+
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+<div class="container">
+
+<h1>🛡️ SurakshaAI</h1>
+
+<p>AI Powered Financial Fraud Detector</p>
+
+<textarea
+id="message"
+placeholder="Paste any SMS, Email or WhatsApp message here..."
+></textarea>
+
+<button onclick="checkScam()">
+
+🔍 Check Scam
+
+</button>
+
+<button onclick="clearForm()" id="clearBtn">
+    🔄 Scan Another Message
+</button>
+
+<hr>
+
+<h3>🛡 Safety Tips</h3>
+
+<ul>
+
+<li>Never share OTP.</li>
+
+<li>Don't click unknown links.</li>
+
+<li>Always verify bank messages.</li>
+
+<li>Use official banking apps only.</li>
+
+</ul>
+
+<div id="result"></div>
+
+<h3>⚠ Risk Meter</h3>
+
+<div class="risk-container">
+
+    <div id="riskBar"></div>
+
+</div>
+
+<p id="riskText">0%</p>
+
+</div>
+
+<script src="script.js"></script>
+
+</body>
+</html>

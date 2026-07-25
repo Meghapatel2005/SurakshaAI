@@ -1,0 +1,11 @@
+text,label
+"Dear customer, your bank account is blocked. Verify your KYC immediately.",scam
+"Share your OTP to receive ₹5000 reward.",scam
+"You have won a lottery. Click here to claim.",scam
+"Your UPI account is suspended. Verify now.",scam
+"Meeting is scheduled at 4 PM today.",safe
+"Please bring your notebook tomorrow.",safe
+"Happy Birthday! Have a wonderful day.",safe
+"Your electricity bill has been paid successfully.",safe
+"Amazon order has been delivered.",safe
+"Don't share your OTP with anyone.",safe
