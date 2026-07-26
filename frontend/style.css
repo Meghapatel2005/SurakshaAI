@@ -140,3 +140,65 @@ button:hover{
 #clearBtn:hover{
     background:#388e3c;
 }
+
+#history{
+
+margin-top:20px;
+
+}
+
+.history-item{
+
+background:#f8f9fa;
+
+padding:15px;
+
+margin-top:10px;
+
+border-left:6px solid #1976d2;
+
+border-radius:8px;
+
+box-shadow:0 2px 8px rgba(0,0,0,0.1);
+
+}
+
+.history-item h3{
+
+margin:0;
+
+}
+
+.history-item p{
+
+margin:5px 0;
+
+}
+
+#clearBtn{
+
+background:#d32f2f;
+
+color:white;
+
+border:none;
+
+padding:10px 18px;
+
+border-radius:8px;
+
+cursor:pointer;
+
+margin-bottom:15px;
+
+font-size:15px;
+
+font-weight:bold;
+
+}
+
+#clearBtn:hover{
+
+background:#b71c1c;
+
+}

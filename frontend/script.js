@@ -128,6 +128,38 @@ if (data["AI Prediction"] === "SCAM") {
 
 }
 
+// ===== Save Scan History =====
+
+let history = JSON.parse(localStorage.getItem("scanHistory")) || [];
+
+history.unshift({
+    result: data.Result,
+    confidence: data.Confidence,
+    time: new Date().toLocaleTimeString()
+});
+
+// Keep only latest 5 scans
+history = history.slice(0, 5);
+
+localStorage.setItem("scanHistory", JSON.stringify(history));
+
+// Display History
+let historyHTML = "";
+
+history.forEach(item => {
+
+    historyHTML += `
+    <div class="history-item">
+        <h3>${item.result}</h3>
+        <p>🎯 Confidence: ${item.confidence}%</p>
+        <p>🕒 ${item.time}</p>
+    </div>
+    `;
+
+});
+
+document.getElementById("history").innerHTML = historyHTML;
+
     }
 
     catch(error){
@@ -151,5 +183,13 @@ function clearForm(){
     document.getElementById("riskText").innerHTML = "0%";
 
     document.getElementById("riskBar").style.background = "#43a047";
+
+}
+
+function clearHistory(){
+
+    localStorage.removeItem("scanHistory");
+
+    document.getElementById("history").innerHTML = "";
 
 }
