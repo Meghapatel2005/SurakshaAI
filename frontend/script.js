@@ -58,6 +58,38 @@ async function checkScam() {
 
         window.latestScan = data;
 
+        // ===== AI Confidence Gauge =====
+
+let confidence = data["Confidence"];
+
+document.getElementById("confidenceValue").innerHTML = confidence + "%";
+
+const circle = document.getElementById("progressCircle");
+
+const radius = 65;
+
+const circumference = 2 * Math.PI * radius;
+
+const offset = circumference - (confidence / 100) * circumference;
+
+circle.style.strokeDashoffset = offset;
+
+if(confidence >= 80){
+
+    circle.style.stroke = "#4caf50";
+
+}
+else if(confidence >= 50){
+
+    circle.style.stroke = "#ff9800";
+
+}
+else{
+
+    circle.style.stroke = "#d50000";
+
+}
+
         updateRiskMeter(data["Risk Score"]);
 
         resultDiv.innerHTML = `
@@ -254,6 +286,20 @@ function loadHistory() {
 
     document.getElementById("history").innerHTML = historyHTML;
 
+    // ===== Statistics Dashboard =====
+
+document.getElementById("totalScans").innerHTML = history.length;
+
+let scamCount = history.filter(item =>
+    item.result.toLowerCase().includes("scam")
+).length;
+
+let safeCount = history.length - scamCount;
+
+document.getElementById("scamCount").innerHTML = scamCount;
+
+document.getElementById("safeCount").innerHTML = safeCount;
+
 }
 
 function clearHistory() {
@@ -261,6 +307,10 @@ function clearHistory() {
     localStorage.removeItem("scanHistory");
 
     document.getElementById("history").innerHTML = "";
+
+    document.getElementById("totalScans").innerHTML = "0";
+    document.getElementById("scamCount").innerHTML = "0";
+    document.getElementById("safeCount").innerHTML = "0";
 
 }
 
@@ -275,6 +325,14 @@ function clearForm() {
     document.getElementById("riskBar").style.background = "#43a047";
 
     document.getElementById("riskText").innerHTML = "0%";
+
+    document.getElementById("confidenceValue").innerHTML = "0%";
+
+const circle = document.getElementById("progressCircle");
+
+circle.style.strokeDashoffset = 408;
+
+circle.style.stroke = "#4caf50";
 
 }
 

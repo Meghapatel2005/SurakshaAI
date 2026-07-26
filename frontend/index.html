@@ -47,6 +47,39 @@
     </ul>
 
     <div id="result"></div>
+
+    <div class="confidence-box">
+
+    <h3>🤖 AI Confidence</h3>
+
+    <div class="circle">
+
+        <svg width="160" height="160">
+
+            <circle
+                cx="80"
+                cy="80"
+                r="65"
+                class="bg-circle">
+            </circle>
+
+            <circle
+                cx="80"
+                cy="80"
+                r="65"
+                class="progress-circle"
+                id="progressCircle">
+            </circle>
+
+        </svg>
+
+        <div id="confidenceValue">
+            0%
+        </div>
+
+    </div>
+
+</div>
     <button onclick="downloadPDF()" id="pdfBtn">
     📄 Download PDF Report
     </button>
@@ -60,6 +93,29 @@
     </button>
 
     <div id="history"></div>
+
+    <hr>
+
+<h2>📊 Statistics Dashboard</h2>
+
+<div class="stats-container">
+
+    <div class="stat-card">
+        <h3 id="totalScans">0</h3>
+        <p>Total Scans</p>
+    </div>
+
+    <div class="stat-card">
+        <h3 id="scamCount">0</h3>
+        <p>Scam Detected</p>
+    </div>
+
+    <div class="stat-card">
+        <h3 id="safeCount">0</h3>
+        <p>Safe Messages</p>
+    </div>
+
+</div>
 
     <h3>⚠ Risk Meter</h3>
 
