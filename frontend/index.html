@@ -12,62 +12,59 @@
 
 <div class="container">
 
-<h1>🛡️ SurakshaAI</h1>
+    <div class="top-bar">
+        <button id="themeBtn" onclick="toggleTheme()">
+            🌙 Dark Mode
+        </button>
+    </div>
 
-<p>AI Powered Financial Fraud Detector</p>
+    <h1>🛡️ SurakshaAI</h1>
 
-<textarea
-id="message"
-placeholder="Paste any SMS, Email or WhatsApp message here..."
-></textarea>
+    <p>AI Powered Financial Fraud Detector</p>
 
-<button onclick="checkScam()">
+    <textarea
+        id="message"
+        placeholder="Paste any SMS, Email or WhatsApp message here..."
+    ></textarea>
 
-🔍 Check Scam
+    <button onclick="checkScam()">
+        🔍 Check Scam
+    </button>
 
-</button>
+    <button onclick="clearForm()" id="scanBtn">
+        🔄 Scan Another Message
+    </button>
 
-<button onclick="clearForm()" id="clearBtn">
-    🔄 Scan Another Message
-</button>
+    <hr>
 
-<hr>
+    <h3>🛡 Safety Tips</h3>
 
-<h3>🛡 Safety Tips</h3>
+    <ul>
+        <li>Never share OTP.</li>
+        <li>Don't click unknown links.</li>
+        <li>Always verify bank messages.</li>
+        <li>Use official banking apps only.</li>
+    </ul>
 
-<ul>
+    <div id="result"></div>
 
-<li>Never share OTP.</li>
+    <hr>
 
-<li>Don't click unknown links.</li>
+    <h2>📜 Scan History</h2>
 
-<li>Always verify bank messages.</li>
+    <button onclick="clearHistory()" id="historyBtn">
+        🗑 Clear History
+    </button>
 
-<li>Use official banking apps only.</li>
+    <div id="history"></div>
 
-</ul>
+    <h3>⚠ Risk Meter</h3>
 
-<div id="result"></div>
+    <div class="risk-container">
+        <div id="riskBar"></div>
+    </div>
 
-<hr>
-
-<h2>📜 Scan History</h2>
-
-<button onclick="clearHistory()" id="clearBtn">
-🗑 Clear History
-</button>
-
-<div id="history"></div>
-
-<h3>⚠ Risk Meter</h3>
-
-<div class="risk-container">
-
-    <div id="riskBar"></div>
-
-</div>
-
-<p id="riskText">0%</p>
+    <p id="riskText">0%</p>
 
 </div>
 

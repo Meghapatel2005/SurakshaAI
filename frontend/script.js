@@ -1,8 +1,36 @@
+window.onload = function () {
+
+    loadHistory();
+
+    const savedTheme = localStorage.getItem("theme");
+
+    if (savedTheme === "dark") {
+
+        document.body.classList.add("dark");
+
+        document.getElementById("themeBtn").innerHTML = "☀ Light Mode";
+
+    }
+
+};
+
 async function checkScam() {
 
-    const messageInput = document.getElementById("message").value;
+    const messageInput = document.getElementById("message").value.trim();
 
     const resultDiv = document.getElementById("result");
+
+    if (messageInput === "") {
+
+        resultDiv.innerHTML = `
+            <h3 style="color:red;">
+                ⚠ Please enter a message first.
+            </h3>
+        `;
+
+        return;
+
+    }
 
     resultDiv.innerHTML = "⏳ Checking...";
 
@@ -13,39 +41,22 @@ async function checkScam() {
             method: "POST",
 
             headers: {
+
                 "Content-Type": "application/json"
+
             },
 
             body: JSON.stringify({
+
                 text: messageInput
+
             })
 
         });
 
         const data = await response.json();
-        let risk = data["Risk Score"];
 
-        document.getElementById("riskBar").style.width = risk + "%";
-
-        document.getElementById("riskText").innerHTML = risk + "%";
-
-        if(risk>=80){
-
-        document.getElementById("riskBar").style.background="#d50000";
-
-        }
-
-        else if(risk>=50){
-
-        document.getElementById("riskBar").style.background="#ff9800";
-
-        }
-
-        else{
-
-        document.getElementById("riskBar").style.background="#4caf50";
-
-        }
+        updateRiskMeter(data["Risk Score"]);
 
         resultDiv.innerHTML = `
 
@@ -61,13 +72,13 @@ async function checkScam() {
 
 <p><b>Matched Keywords</b></p>
 
-<p>${data["Matched Keywords"].join(", ")}</p>
+<p>${data["Matched Keywords"].join(", ") || "None"}</p>
 
 <hr>
 
 <p><b>Suspicious URLs</b></p>
 
-<p>${data["Suspicious URLs"].join("<br>")}</p>
+<p>${data["Suspicious URLs"].join("<br>") || "None"}</p>
 
 <hr>
 
@@ -83,88 +94,80 @@ async function checkScam() {
 
 `;
 
+
         const reasons = [];
 
-        if (data["Matched Keywords"].length > 0) {
+        if (data["Matched Keywords"].length > 0)
             reasons.push("✔ Scam-related keywords detected");
-        }
 
-        if (data["Suspicious URLs"].length > 0) {
+        if (data["Suspicious URLs"].length > 0)
             reasons.push("✔ Suspicious URL detected");
-        }
 
-        if (data["Risk Score"] >= 50) {
+        if (data["Risk Score"] >= 50)
             reasons.push("✔ High risk score");
-        }
 
-        if (data["AI Prediction"] === "SCAM") {
+        if (data["AI Prediction"] === "SCAM")
             reasons.push("✔ AI classified this message as scam");
-        }
 
         document.getElementById("reasons").innerHTML =
-            reasons.map(r => `<li>${r}</li>`).join("");
+            reasons.map(item => `<li>${item}</li>`).join("");
 
-            const tipsDiv = document.getElementById("tips");
 
-if (data["AI Prediction"] === "SCAM") {
+        const tipsDiv = document.getElementById("tips");
 
-    tipsDiv.innerHTML = `
-    <ul>
-        <li>🚫 Never share your OTP or banking PIN.</li>
-        <li>🔗 Avoid clicking suspicious links.</li>
-        <li>🏦 Verify messages using the official bank website.</li>
-        <li>📞 Contact your bank if you are unsure.</li>
-    </ul>
-    `;
+        if (data["AI Prediction"] === "SCAM") {
 
-} else {
+            tipsDiv.innerHTML = `
 
-    tipsDiv.innerHTML = `
-    <p style="color:green;">
-    ✅ No major scam indicators detected.<br>
-    Stay alert while sharing personal information online.
-    </p>
-    `;
+<ul>
 
-}
+<li>🚫 Never share OTP or Banking PIN.</li>
 
-// ===== Save Scan History =====
+<li>🔗 Don't click suspicious links.</li>
 
-let history = JSON.parse(localStorage.getItem("scanHistory")) || [];
+<li>🏦 Verify using official bank website.</li>
 
-history.unshift({
-    result: data.Result,
-    confidence: data.Confidence,
-    time: new Date().toLocaleTimeString()
-});
+<li>📞 Contact your bank immediately if unsure.</li>
 
-// Keep only latest 5 scans
-history = history.slice(0, 5);
+</ul>
 
-localStorage.setItem("scanHistory", JSON.stringify(history));
+`;
 
-// Display History
-let historyHTML = "";
+        }
 
-history.forEach(item => {
+        else {
 
-    historyHTML += `
-    <div class="history-item">
-        <h3>${item.result}</h3>
-        <p>🎯 Confidence: ${item.confidence}%</p>
-        <p>🕒 ${item.time}</p>
-    </div>
-    `;
+            tipsDiv.innerHTML = `
 
-});
+<p style="color:green;">
 
-document.getElementById("history").innerHTML = historyHTML;
+✅ No major scam indicators detected.
+
+<br>
+
+Stay alert while sharing personal information.
+
+</p>
+
+`;
+
+        }
+
+        saveHistory(data);
 
     }
 
-    catch(error){
+    catch (error) {
 
-        resultDiv.innerHTML="❌ Backend Connection Failed";
+        resultDiv.innerHTML = `
+
+<h3 style="color:red;">
+
+❌ Backend Connection Failed
+
+</h3>
+
+`;
 
         console.log(error);
 
@@ -172,7 +175,94 @@ document.getElementById("history").innerHTML = historyHTML;
 
 }
 
-function clearForm(){
+function updateRiskMeter(risk) {
+
+    const riskBar = document.getElementById("riskBar");
+    const riskText = document.getElementById("riskText");
+
+    riskBar.style.width = risk + "%";
+    riskText.innerHTML = risk + "%";
+
+    if (risk >= 80) {
+
+        riskBar.style.background = "#d50000";
+
+    }
+
+    else if (risk >= 50) {
+
+        riskBar.style.background = "#ff9800";
+
+    }
+
+    else {
+
+        riskBar.style.background = "#43a047";
+
+    }
+
+}
+
+function saveHistory(data) {
+
+    let history = JSON.parse(localStorage.getItem("scanHistory")) || [];
+
+    history.unshift({
+
+        result: data.Result,
+        confidence: data.Confidence,
+        risk: data["Risk Score"],
+        time: new Date().toLocaleTimeString()
+
+    });
+
+    history = history.slice(0, 5);
+
+    localStorage.setItem("scanHistory", JSON.stringify(history));
+
+    loadHistory();
+
+}
+
+function loadHistory() {
+
+    let history = JSON.parse(localStorage.getItem("scanHistory")) || [];
+
+    let historyHTML = "";
+
+    history.forEach(item => {
+
+        historyHTML += `
+
+<div class="history-item">
+
+<h3>${item.result}</h3>
+
+<p>🎯 Confidence: ${item.confidence}%</p>
+
+<p>⚠ Risk: ${item.risk}%</p>
+
+<p>🕒 ${item.time}</p>
+
+</div>
+
+`;
+
+    });
+
+    document.getElementById("history").innerHTML = historyHTML;
+
+}
+
+function clearHistory() {
+
+    localStorage.removeItem("scanHistory");
+
+    document.getElementById("history").innerHTML = "";
+
+}
+
+function clearForm() {
 
     document.getElementById("message").value = "";
 
@@ -180,16 +270,32 @@ function clearForm(){
 
     document.getElementById("riskBar").style.width = "0%";
 
-    document.getElementById("riskText").innerHTML = "0%";
-
     document.getElementById("riskBar").style.background = "#43a047";
+
+    document.getElementById("riskText").innerHTML = "0%";
 
 }
 
-function clearHistory(){
+function toggleTheme() {
 
-    localStorage.removeItem("scanHistory");
+    document.body.classList.toggle("dark");
 
-    document.getElementById("history").innerHTML = "";
+    const btn = document.getElementById("themeBtn");
+
+    if (document.body.classList.contains("dark")) {
+
+        btn.innerHTML = "☀ Light Mode";
+
+        localStorage.setItem("theme", "dark");
+
+    }
+
+    else {
+
+        btn.innerHTML = "🌙 Dark Mode";
+
+        localStorage.setItem("theme", "light");
+
+    }
 
 }

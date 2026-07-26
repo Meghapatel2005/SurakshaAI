@@ -1,24 +1,64 @@
-body{
+/* =====================================
+   SurakshaAI v2.0
+   style.css (Part 1)
+====================================== */
+
+*{
     margin:0;
+    padding:0;
+    box-sizing:border-box;
     font-family:Arial, Helvetica, sans-serif;
+}
+
+body{
+
     background:linear-gradient(135deg,#0f172a,#1e3a8a);
+
+    min-height:100vh;
+
+    padding:40px;
+
+    transition:.4s;
+
 }
 
 .container{
 
-    width:700px;
+    width:100%;
 
-    margin:40px auto;
+    max-width:760px;
+
+    margin:auto;
 
     background:white;
 
-    border-radius:20px;
+    border-radius:22px;
 
-    padding:30px;
+    padding:35px;
 
-    box-shadow:0 10px 30px rgba(0,0,0,.3);
+    box-shadow:0 12px 35px rgba(0,0,0,.25);
+
+    transition:.4s;
 
 }
+
+/* ===========================
+   Top Bar
+=========================== */
+
+.top-bar{
+
+    display:flex;
+
+    justify-content:flex-end;
+
+    margin-bottom:20px;
+
+}
+
+/* ===========================
+   Heading
+=========================== */
 
 h1{
 
@@ -26,13 +66,37 @@ h1{
 
     color:#1565c0;
 
+    margin-bottom:10px;
+
+}
+
+h2{
+
+    margin-top:20px;
+
+    margin-bottom:15px;
+
+}
+
+h3{
+
+    margin-top:18px;
+
+    margin-bottom:10px;
+
 }
 
 p{
 
     text-align:center;
 
+    line-height:1.6;
+
 }
+
+/* ===========================
+   Text Area
+=========================== */
 
 textarea{
 
@@ -40,33 +104,53 @@ textarea{
 
     height:180px;
 
-    border-radius:10px;
+    margin-top:20px;
 
     padding:15px;
 
-    font-size:17px;
+    border-radius:12px;
+
+    border:2px solid #dcdcdc;
+
+    outline:none;
 
     resize:none;
 
+    font-size:16px;
+
+    transition:.3s;
+
 }
+
+textarea:focus{
+
+    border-color:#1565c0;
+
+    box-shadow:0 0 8px rgba(21,101,192,.25);
+
+}
+
+/* ===========================
+   Buttons
+=========================== */
 
 button{
 
     width:100%;
 
-    padding:15px;
+    margin-top:18px;
 
-    margin-top:20px;
+    padding:15px;
 
     border:none;
 
-    background:#1565c0;
+    border-radius:10px;
+
+    font-size:18px;
+
+    font-weight:bold;
 
     color:white;
-
-    font-size:20px;
-
-    border-radius:10px;
 
     cursor:pointer;
 
@@ -74,11 +158,77 @@ button{
 
 }
 
-button:hover{
+/* Scan Button */
+
+button:first-of-type{
+
+    background:#1565c0;
+
+}
+
+button:first-of-type:hover{
 
     background:#0d47a1;
 
+    transform:translateY(-2px);
+
 }
+
+/* Scan Another */
+
+#scanBtn{
+
+    background:#43a047;
+
+}
+
+#scanBtn:hover{
+
+    background:#2e7d32;
+
+}
+
+/* Clear History */
+
+#historyBtn{
+
+    background:#d32f2f;
+
+}
+
+#historyBtn:hover{
+
+    background:#b71c1c;
+
+}
+
+/* Theme Button */
+
+#themeBtn{
+
+    width:auto;
+
+    padding:10px 18px;
+
+    margin:0;
+
+    background:#222;
+
+    border-radius:8px;
+
+    font-size:15px;
+
+}
+
+#themeBtn:hover{
+
+    background:#444;
+
+}
+
+/* ===========================
+   Result Box
+=========================== */
 
 #result{
 
@@ -86,11 +236,57 @@ button:hover{
 
     padding:20px;
 
-    border-radius:12px;
+    background:#f7f7f7;
 
-    background:#f5f5f5;
+    border-radius:15px;
+
+    box-shadow:0 3px 10px rgba(0,0,0,.08);
+
+    animation:fadeIn .4s ease;
 
 }
+
+/* ===========================
+   Horizontal Line
+=========================== */
+
+hr{
+
+    margin:25px 0;
+
+    border:none;
+
+    border-top:1px solid #ddd;
+
+}
+
+/* ===========================
+   Fade Animation
+=========================== */
+
+@keyframes fadeIn{
+
+    from{
+
+        opacity:0;
+
+        transform:translateY(10px);
+
+    }
+
+    to{
+
+        opacity:1;
+
+        transform:translateY(0);
+
+    }
+
+}
+
+/* =====================================
+   Risk Meter
+====================================== */
 
 .risk-container{
 
@@ -98,7 +294,7 @@ button:hover{
 
     height:28px;
 
-    background:#ddd;
+    background:#dcdcdc;
 
     border-radius:20px;
 
@@ -118,87 +314,229 @@ button:hover{
 
     transition:width .8s ease;
 
+    box-shadow:0 0 10px rgba(0,0,0,.2);
+
 }
 
 #riskText{
+
+    text-align:center;
 
     font-size:18px;
 
     font-weight:bold;
 
-    text-align:center;
-
-    margin-top:8px;
-
-}
-
-#clearBtn{
-    background:#4caf50;
     margin-top:10px;
+
 }
 
-#clearBtn:hover{
-    background:#388e3c;
-}
+/* =====================================
+   Scan History
+====================================== */
 
 #history{
 
-margin-top:20px;
+    margin-top:20px;
 
 }
 
 .history-item{
 
-background:#f8f9fa;
+    background:#f8f9fa;
 
-padding:15px;
+    border-left:6px solid #1565c0;
 
-margin-top:10px;
+    border-radius:12px;
 
-border-left:6px solid #1976d2;
+    padding:15px;
 
-border-radius:8px;
+    margin-bottom:15px;
 
-box-shadow:0 2px 8px rgba(0,0,0,0.1);
+    box-shadow:0 3px 10px rgba(0,0,0,.08);
+
+    transition:.3s;
+
+}
+
+.history-item:hover{
+
+    transform:translateY(-3px);
+
+    box-shadow:0 6px 15px rgba(0,0,0,.15);
 
 }
 
 .history-item h3{
 
-margin:0;
+    margin-bottom:8px;
+
+    color:#1565c0;
 
 }
 
 .history-item p{
 
-margin:5px 0;
+    text-align:left;
+
+    margin:5px 0;
 
 }
 
-#clearBtn{
+/* =====================================
+   Lists
+====================================== */
 
-background:#d32f2f;
+ul{
 
-color:white;
-
-border:none;
-
-padding:10px 18px;
-
-border-radius:8px;
-
-cursor:pointer;
-
-margin-bottom:15px;
-
-font-size:15px;
-
-font-weight:bold;
+    padding-left:22px;
 
 }
 
-#clearBtn:hover{
+li{
 
-background:#b71c1c;
+    margin:8px 0;
+
+}
+
+/* =====================================
+   DARK MODE
+====================================== */
+
+body.dark{
+
+    background:linear-gradient(135deg,#0b1120,#111827);
+
+}
+
+body.dark .container{
+
+    background:#1f2937;
+
+    color:white;
+
+}
+
+body.dark h1{
+
+    color:#64b5f6;
+
+}
+
+body.dark h2,
+body.dark h3,
+body.dark p,
+body.dark li{
+
+    color:white;
+
+}
+
+body.dark textarea{
+
+    background:#111827;
+
+    color:white;
+
+    border:2px solid #4b5563;
+
+}
+
+body.dark textarea::placeholder{
+
+    color:#bdbdbd;
+
+}
+
+body.dark #result{
+
+    background:#111827;
+
+    color:white;
+
+}
+
+body.dark .history-item{
+
+    background:#111827;
+
+    border-left:6px solid #64b5f6;
+
+}
+
+body.dark .history-item h3{
+
+    color:#64b5f6;
+
+}
+
+body.dark .risk-container{
+
+    background:#444;
+
+}
+
+body.dark hr{
+
+    border-top:1px solid #555;
+
+}
+
+/* =====================================
+   Responsive Design
+====================================== */
+
+@media(max-width:768px){
+
+body{
+
+    padding:20px;
+
+}
+
+.container{
+
+    padding:20px;
+
+}
+
+h1{
+
+    font-size:30px;
+
+}
+
+button{
+
+    font-size:16px;
+
+}
+
+textarea{
+
+    height:150px;
+
+}
+
+}
+
+/* =====================================
+   Smooth Scroll
+====================================== */
+
+html{
+
+    scroll-behavior:smooth;
+
+}
+
+/* =====================================
+   Selection Color
+====================================== */
+
+::selection{
+
+    background:#1565c0;
+
+    color:white;
 
 }
